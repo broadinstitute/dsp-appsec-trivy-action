@@ -1,0 +1,1 @@
+# dsp-appsec-trivy-action
