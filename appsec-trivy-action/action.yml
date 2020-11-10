@@ -12,7 +12,7 @@ runs:
         # ---------------CHECK IF ONE OF BLESSED IMAGES IS USED--------------
         if grep -wq "ubuntu:16.04" ${{ inputs.pathDockerfile }} ; then 
           echo "This dockerfile is using appsec team blessed image, no need to scan"
-        elif
+        else
           # -------------BUILD DOCKER IMAGE----------------------------------
           echo "Building docker image ... "
           docker build --tag test-image:${{ github.sha }} .
