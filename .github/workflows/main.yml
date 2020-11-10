@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: appsec-trivy-action
+      - uses: ./appsec-trivy-action
         with:
           pathDockerfile: ${{ secrets.PATH_DOCKERFILE }}
