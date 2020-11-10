@@ -1,7 +1,5 @@
 name: dsp-appsec-trivy-example
-on:
-  push:
-    branches: [main]
+on: [pull_request]
 
 jobs:
   appsec-trivy:
@@ -12,4 +10,4 @@ jobs:
 
       - uses: ./appsec-trivy-action
         with:
-          pathDockerfile: ./Dockerfile
+          pathDockerfile: ./Dockerfile # ADD DOCKERFILE PATH HERE
