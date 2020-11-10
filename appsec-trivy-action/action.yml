@@ -15,8 +15,8 @@ runs:
         else
           # -------------BUILD DOCKER IMAGE----------------------------------
           echo "Building docker image ... "
-          docker build --tag IMAGE:${{ github.sha }} .
+          docker build --tag test-image:${{ github.sha }} .
           # -------------SCAN DOCKER IMAGE WITH TRIVY------------------------
           echo "Scanning docker image ... "
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME"/Library/Caches:/root/.cache/ aquasec/trivy --exit-code 1 --severity CRITICAL IMAGE:${{ github.sha }}
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME"/Library/Caches:/root/.cache/ aquasec/trivy --exit-code 1 --severity CRITICAL test-image:${{ github.sha }}
         fi
