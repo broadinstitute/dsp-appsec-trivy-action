@@ -12,4 +12,4 @@ jobs:
 
       - uses: ./appsec-trivy-action
         with:
-          pathDockerfile: ${{ secrets.PATH_DOCKERFILE }}
+          pathDockerfile: ./Dockerfile
