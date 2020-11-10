@@ -9,14 +9,14 @@ runs:
   steps:
     - shell: bash
       run: |
-        # ---------------CHECK IF ONE OF BLESSED IMAGES IS USED--------------
+        # Check if one of the Appsec "blessed" images is used in Dockerfile
         if grep -wq "baseimage1\|baseimage2\|baseimage3\|baseimage4" ${{ inputs.pathDockerfile }} ; then 
           echo "This dockerfile is using appsec team blessed image, no need to scan"
         else
-          # -------------BUILD DOCKER IMAGE----------------------------------
+          # Build docker image
           echo "Building docker image ... "
           docker build --tag test-image:${{ github.sha }} .
-          # -------------SCAN DOCKER IMAGE WITH TRIVY------------------------
+          # Scan docker image with trivy, fail job if there is at least 1 critical
           echo "Scanning docker image ... "
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME"/Library/Caches:/root/.cache/ aquasec/trivy --exit-code 1 --severity CRITICAL test-image:${{ github.sha }}
         fi
