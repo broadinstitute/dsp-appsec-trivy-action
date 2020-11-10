@@ -10,7 +10,7 @@ runs:
     - shell: bash
       run: |
         # Check if one of the Appsec "blessed" images is used in Dockerfile
-        if grep -wq "baseimage1\|baseimage2\|baseimage3\|baseimage4" ${{ inputs.pathDockerfile }} ; then 
+        if grep -wq "baseimage1\|baseimage2\|baseimage3\|baseimage4" ${{ inputs.pathDockerfile }} | tail -1 ; then 
           echo "This dockerfile is using appsec team blessed image, no need to scan"
         else
           # Build docker image
