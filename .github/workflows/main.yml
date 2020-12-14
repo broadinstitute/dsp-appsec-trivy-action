@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./appsec-trivy-action
+      - uses: ./trivy-action
         with:
           pathDockerfile: ./Dockerfile # ADD DOCKERFILE PATH HERE
+          imageName: test-name # ADD IMAGE NAME HERE

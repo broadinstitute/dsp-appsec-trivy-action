@@ -4,6 +4,9 @@ inputs:
   pathDockerfile:
     description: Path to Dockerfile
     required: true
+  imageName:
+    description: Image name
+    required: true
 runs:
   using: composite
   steps:
@@ -15,8 +18,8 @@ runs:
         else
           # Build docker image
           echo "Building docker image ... "
-          docker build --tag test-image:${{ github.sha }} .
+          docker build --tag ${{ inputs.imageName }}:${{ github.sha }} .
           # Scan docker image with trivy, fail job if there is at least 1 critical
           echo "Scanning docker image ... "
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --ignore-unfixed --exit-code 1 --severity CRITICAL test-image:${{ github.sha }}
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --ignore-unfixed --exit-code 1 --severity CRITICAL ${{ inputs.imageName }}:${{ github.sha }}
         fi
