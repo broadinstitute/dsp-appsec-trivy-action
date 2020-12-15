@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ./trivy-action
+      - uses: broadinstitute/dsp-appsec-trivy-action@v1
         with:
-          pathDockerfile: ./Dockerfile # ADD DOCKERFILE PATH HERE
-          imageName: test-name # ADD IMAGE NAME HERE
+          context: ./test               # (optional) set the path to Docker build context
+          dockerfile: ./test/Dockerfile # (optional) set the path to Dockerfile
