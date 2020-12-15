@@ -13,7 +13,7 @@ Github workflow action which checks if a Dockerfile is using appsec "blessed" im
 
 ```yml
 - uses: ./trivy-action
-with:
+  with:
     pathDockerfile: ./Dockerfile  # ADD DOCKERFILE PATH HERE
     imageName: test-name  # ADD IMAGE NAME HERE
 ```
