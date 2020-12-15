@@ -11,9 +11,4 @@ Github workflow action which checks if a Dockerfile is using appsec "blessed" im
 
 ## Example usage
 
-```yml
-- uses: ./trivy-action
-  with:
-    context: ./test               # (optional) set the path to Docker build context
-    dockerfile: ./test/Dockerfile # (optional) set the path to Dockerfile
-```
+Please see [.github/workflows/main.yml](.github/workflows/main.yml)
