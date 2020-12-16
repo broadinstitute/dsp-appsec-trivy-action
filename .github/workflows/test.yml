@@ -1,13 +1,21 @@
-name: dsp-appsec-trivy-example
+name: dsp-appsec-trivy-action-test
 on: [pull_request]
 
 jobs:
-  appsec-trivy:
+  test:
     name: Parse Dockerfile and build, scan image if "blessed image" is not used
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - name: Test Trivy scan
+        uses: .
         with:
-          context: ./test               # (optional) set the path to Docker build context
+          context: ./test
+          dockerfile: Dockerfile.trivy
+
+      - name: Test a blessed base image
+        uses: .
+        with:
+          context: ./test
+          dockerfile: Dockerfile.notrivy

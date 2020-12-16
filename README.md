@@ -11,4 +11,4 @@ Github workflow action which checks if a Dockerfile is using appsec "blessed" im
 
 ## Example usage
 
-Please see [.github/workflows/test.yml](.github/workflows/test.yml)
+Please see [.github/workflows/example.yml](.github/workflows/example.yml)
