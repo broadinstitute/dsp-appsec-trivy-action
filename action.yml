@@ -1,0 +1,44 @@
+name: Docker image parse and scan
+description: Parse Dockerfile and build, scan the image if a "blessed" base image is not used
+
+inputs:
+  context:
+    description: Path to Docker build context
+    required: false
+    default: .
+  dockerfile:
+    description: Path to Dockerfile within the build context
+    required: false
+    default: Dockerfile
+  type:
+    description: Comma-delimited list of scan types
+    required: false
+    default: os
+  severities:
+    description: Comma-delimited list of severities for Trivy
+    required: false
+    default: CRITICAL
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      working-directory: ${{ inputs.context }}
+      env:
+        BASE_PREFIX: us.gcr.io/broad-dsp-gcr-public/base/
+        IMAGE: ${{ github.repository }}:${{ github.sha }}
+      run: |
+        # Check if a "blessed" base image is used in the last stage of the Dockerfile
+        if grep "^FROM " "${{ inputs.dockerfile }}" | tail -1 | grep -q "^FROM ${BASE_PREFIX}" ; then
+          echo "This Dockerfile is using a DSP AppSec team's blessed image at runtime, no need to scan"
+        else
+          # Build Docker image
+          echo "Building the Docker image ... "
+          docker build -t "${IMAGE}" -f "${{ inputs.dockerfile }}" .
+
+          # Scan Docker image with Trivy, fail the job if there is a relevant vulnerability
+          echo "Scanning the Docker image ... "
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
+            --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
+            --ignore-unfixed --exit-code 1 "${IMAGE}"
+        fi

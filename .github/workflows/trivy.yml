@@ -1,0 +1,19 @@
+name: dsp-appsec-trivy
+on: [pull_request]
+
+jobs:
+  appsec-trivy:
+    # Parse Dockerfile and build, scan image if a "blessed" base image is not used
+    name: DSP AppSec Trivy check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # simple case
+      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+
+      # alternatively, if you need to customize the path to Dockerfile and/or build context
+      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+        with:
+          context: ./docker               # (optional) set the path to Docker build context
+          dockerfile: Dockerfile.alpine   # (optional) set the path to Dockerfile within build context
