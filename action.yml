@@ -36,7 +36,7 @@ runs:
           echo "Building the Docker image ... "
           docker build -t "${IMAGE}" -f "${{ inputs.dockerfile }}" .
 
-          # Scan Docker image with Trivy, fail the job if there is at least 1 critical
+          # Scan Docker image with Trivy, fail the job if there is a relevant vulnerability
           echo "Scanning the Docker image ... "
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
             --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
