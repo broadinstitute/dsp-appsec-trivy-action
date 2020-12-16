@@ -9,13 +9,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Test Trivy scan
-        uses: .
+        uses: ./
         with:
           context: ./test
           dockerfile: Dockerfile.trivy
 
       - name: Test a blessed base image
-        uses: .
+        uses: ./
         with:
           context: ./test
           dockerfile: Dockerfile.notrivy
