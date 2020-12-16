@@ -1,1 +1,1 @@
-FROM alpine
+test/Dockerfile.trivy
