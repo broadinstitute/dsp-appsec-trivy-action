@@ -4,11 +4,7 @@ Github workflow action which checks if a Dockerfile is using appsec "blessed" im
 - If no, it builds the image, scans it via Trivy tool and reports Critical vulnerabilities.
 - If yes, it doesn't build or scan the image.
 
-## Inputs
+## Usage
 
-- Dockerfile path
-- Image name
-
-## Example usage
-
-Please see [.github/workflows/example.yml](.github/workflows/example.yml)
+Feel free to copy [.github/workflows/trivy.yml](.github/workflows/trivy.yml)
+into your repo and customize as needed.

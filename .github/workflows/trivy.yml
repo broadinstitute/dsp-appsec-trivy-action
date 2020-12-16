@@ -1,4 +1,4 @@
-name: dsp-appsec-trivy-example
+name: dsp-appsec-trivy
 on: [pull_request]
 
 jobs:
