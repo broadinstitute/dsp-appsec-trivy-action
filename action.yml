@@ -38,8 +38,7 @@ runs:
 
           # Scan Docker image with Trivy, fail the job if there is a relevant vulnerability
           echo "Scanning the Docker image ... "
-          docker run --rm -v "${HOME}/.cache/:/root/.cache/" \
-            -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
             --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
             --ignore-unfixed --exit-code 1 "${IMAGE}"
         fi
