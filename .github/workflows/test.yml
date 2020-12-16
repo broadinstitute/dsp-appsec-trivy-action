@@ -3,7 +3,7 @@ on: [pull_request]
 
 jobs:
   test:
-    name: Parse Dockerfile and build, scan image if "blessed image" is not used
+    name: Test Trivy action
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
