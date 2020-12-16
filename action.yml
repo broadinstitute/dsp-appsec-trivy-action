@@ -10,6 +10,10 @@ inputs:
     description: Path to Dockerfile within the build context
     required: false
     default: Dockerfile
+  type:
+    description: Comma-delimited list of scan types
+    required: false
+    default: os
   severities:
     description: Comma-delimited list of severities for Trivy
     required: false
@@ -35,5 +39,6 @@ runs:
           # Scan Docker image with Trivy, fail the job if there is at least 1 critical
           echo "Scanning the Docker image ... "
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
-            --severity "${{ inputs.severities }}" --ignore-unfixed --exit-code 1 "${image}"
+            --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
+            --ignore-unfixed --exit-code 1 "${image}"
         fi
