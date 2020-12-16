@@ -11,4 +11,3 @@ jobs:
       - uses: broadinstitute/dsp-appsec-trivy-action@v1
         with:
           context: ./test               # (optional) set the path to Docker build context
-          dockerfile: ./test/Dockerfile # (optional) set the path to Dockerfile
