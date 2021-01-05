@@ -25,3 +25,8 @@ jobs:
         with:
           context: ./test
           dockerfile: Dockerfile.notrivy
+
+      - name: Test a pre-built image
+        uses: ./
+        with:
+          image: gcr.io/distroless/static
