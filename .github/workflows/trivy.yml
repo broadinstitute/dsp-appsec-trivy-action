@@ -17,3 +17,8 @@ jobs:
         with:
           context: .              # (optional) set the path to Docker build context
           dockerfile: Dockerfile  # (optional) set the path to Dockerfile within build context
+
+      # alternatively, if you're using a pre-built Docker image (e.g. with Jib or Buildpacks)
+      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+        with:
+          image: gcr.io/distroless/static
