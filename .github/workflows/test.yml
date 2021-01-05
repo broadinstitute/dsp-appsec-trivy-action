@@ -14,19 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test Trivy scan
+      - name: [test] Build & scan
         uses: ./
         with:
           context: ./test
           dockerfile: Dockerfile.trivy
 
-      - name: Test a blessed base image
+      - name: [test] Skip a blessed base image
         uses: ./
         with:
           context: ./test
           dockerfile: Dockerfile.notrivy
 
-      - name: Test a pre-built image
+      - name: [test] Scan a pre-built image
         uses: ./
         with:
           image: gcr.io/distroless/static
