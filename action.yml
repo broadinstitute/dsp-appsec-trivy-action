@@ -3,7 +3,7 @@ description: Parse Dockerfile and build, scan the image if a "blessed" base imag
 
 inputs:
   context:
-    description: Path to Docker build context
+    description: Path to Docker build context (omit if using the 'image' option)
     required: false
     default: .
   dockerfile:
