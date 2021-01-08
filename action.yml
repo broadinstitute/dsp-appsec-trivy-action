@@ -30,7 +30,6 @@ runs:
       working-directory: ${{ inputs.context }}
       env:
         BASE_PREFIX: us.gcr.io/broad-dsp-gcr-public/base/
-        IMAGE: ${{ github.repository }}:${{ github.sha }}
       run: |
         # Exit early if a "blessed" base image is used in the last stage of the Dockerfile
         if grep "^FROM " "${{ inputs.dockerfile }}" | tail -1 | grep -q "^FROM ${BASE_PREFIX}" ; then
@@ -42,6 +41,8 @@ runs:
         if [[ -z "${{ inputs.image }}" ]] ; then
           # Build the image
           echo "Building the Docker image ... "
+          REPO="${{ github.repository }}"
+          IMAGE="${REPO,,}:${{ github.sha }}" # converts ${REPO} to lowercase
           docker build -t "${IMAGE}" -f "${{ inputs.dockerfile }}" .
         else
           IMAGE="${{ inputs.image }}"
