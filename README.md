@@ -1,6 +1,7 @@
 # DSP Appsec Trivy action
 
-Github workflow action which checks if a Dockerfile is using appsec "blessed" images.
+Github workflow action which checks if a Dockerfile is using AppSec
+["blessed" images](https://github.com/broadinstitute/dsp-appsec-blessed-images).
 - If no, it builds the image, scans it via Trivy tool and reports Critical vulnerabilities.
 - If yes, it doesn't build or scan the image.
 
