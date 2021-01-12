@@ -52,4 +52,4 @@ runs:
         echo "Scanning the Docker image ... "
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
-          --ignore-unfixed --exit-code 1 --no-progress "${IMAGE}"
+          --ignore-unfixed --exit-code 1 --no-progress --timeout 10m "${IMAGE}"
