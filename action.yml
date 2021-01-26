@@ -57,10 +57,10 @@ runs:
         format_args=""
         if [ -n "${{ inputs.sarif }}" ]; then
           # add options for Sarif template output
-          format_args="--format template --template '@contrib/sarif.tpl' --output '/workspace/${{ inputs.sarif }}'"
+          format_args="--format template --template '@contrib/sarif.tpl' -o '/workspace/${{ inputs.sarif }}'"
         fi
 
         echo "${format_args}"
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
-          --ignore-unfixed --exit-code 1 --no-progress --timeout 10m "${format_args}" "${IMAGE}"
+          --ignore-unfixed --exit-code 1 --no-progress --timeout 10m ${format_args} "${IMAGE}"
