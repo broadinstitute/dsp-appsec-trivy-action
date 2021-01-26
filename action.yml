@@ -58,6 +58,7 @@ runs:
         if [ -n "${{ inputs.sarif }}" ]; then
           format_args="--format template --template '@contrib/sarif.tpl' --output '/workdir/${{ inputs.sarif }}'"
         fi
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "${PWD}:/workdir" aquasec/trivy \
+        echo "${{ github.workspace }}:/workdir"
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workdir" aquasec/trivy \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
           --ignore-unfixed --exit-code 1 --no-progress --timeout 10m ${format_args} "${IMAGE}"
