@@ -30,3 +30,14 @@ jobs:
         uses: ./
         with:
           image: gcr.io/distroless/static
+
+      - name: '[test] Generate Sarif output'
+        uses: ./
+        with:
+          image: gcr.io/distroless/static
+          sarif: trivy-results.sarif
+
+      - name: [test] Upload scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: trivy-results.sarif
