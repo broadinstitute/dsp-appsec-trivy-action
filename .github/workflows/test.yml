@@ -34,7 +34,7 @@ jobs:
       - name: '[test] Generate Sarif output'
         uses: ./
         with:
-          image: gcr.io/distroless/static
+          image: broadinstitute/cromwell:54
           sarif: trivy-results.sarif
 
       - name: '[test] Upload scan results to GitHub Security tab'
