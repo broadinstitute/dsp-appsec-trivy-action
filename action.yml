@@ -54,12 +54,12 @@ runs:
 
         # Scan the image with Trivy, fail the job if there is a relevant vulnerability
         echo "Scanning the Docker image ... "
-        format_args="--exit-code 1"
+        opt_args="--exit-code 1"
         if [ -n "${{ inputs.sarif }}" ]; then
           # add options for Sarif template output
-          format_args="--format template --template @contrib/sarif.tpl --output /workspace/${{ inputs.sarif }}"
+          opt_args="--format template --template @contrib/sarif.tpl --output /workspace/${{ inputs.sarif }}"
         fi
 
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
-          --ignore-unfixed --no-progress --timeout 10m ${format_args} "${IMAGE}"
+          --ignore-unfixed --no-progress --timeout 10m ${opt_args} "${IMAGE}"
