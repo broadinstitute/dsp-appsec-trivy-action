@@ -56,7 +56,7 @@ runs:
         echo "Scanning the Docker image ... "
         opt_args="--exit-code 1"
         if [ -n "${{ inputs.sarif }}" ]; then
-          # add options for Sarif template output
+          # set options for Sarif template output
           opt_args="--format template --template @contrib/sarif.tpl --output /workspace/${{ inputs.sarif }}"
         fi
 
