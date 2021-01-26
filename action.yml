@@ -23,7 +23,7 @@ inputs:
     required: false
     default: CRITICAL
   sarif:
-    description: 'Sarif template output name, if any (example: trivy-results.sarif)'
+    description: 'Sarif template output path relative to workspace dir, if any (example: trivy-results.sarif)'
     required: false
     default: ''
 
@@ -56,9 +56,9 @@ runs:
         echo "Scanning the Docker image ... "
         format_args=""
         if [ -n "${{ inputs.sarif }}" ]; then
-          format_args="--format template --template '@contrib/sarif.tpl' --output '/workdir/${{ inputs.sarif }}'"
+          format_args="--format template --template '@contrib/sarif.tpl' --output '/workspace/${{ inputs.sarif }}'"
         fi
-        echo "${{ github.workspace }}:/workdir"
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workdir" aquasec/trivy \
+        echo "${{ github.workspace }}:/workspace"
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
           --ignore-unfixed --exit-code 1 --no-progress --timeout 10m ${format_args} "${IMAGE}"
