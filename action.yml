@@ -59,9 +59,13 @@ runs:
           # add options for Sarif template output
           format_args="--format template --template '@contrib/sarif.tpl' --output '/workspace/${{ inputs.sarif }}'"
           echo "${format_args}"
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" --entrypoint sh aquasec/trivy -c 'touch /workspace/${{ inputs.sarif }} && ls -al workspace'
-        fi
+          # docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" --entrypoint sh aquasec/trivy -c 'touch /workspace/${{ inputs.sarif }} && ls -al workspace'
 
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
-          --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
-          --ignore-unfixed --exit-code 1 --no-progress --timeout 10m --format template --template '@contrib/sarif.tpl' -o '/workspace/${{ inputs.sarif }}' "${IMAGE}"
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
+            --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
+            --ignore-unfixed --exit-code 1 --no-progress --timeout 10m --format template --template '@contrib/sarif.tpl' -o '/workspace/${{ inputs.sarif }}' "${IMAGE}"
+        else
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
+            --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
+            --ignore-unfixed --exit-code 1 --no-progress --timeout 10m "${IMAGE}"
+        fi
