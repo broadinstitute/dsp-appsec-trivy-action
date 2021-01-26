@@ -36,6 +36,7 @@ jobs:
         with:
           image: broadinstitute/cromwell:54
           sarif: trivy-results.sarif
+          severities: HIGH
 
       - name: '[test] Upload scan results to GitHub Security tab'
         uses: github/codeql-action/upload-sarif@v1
