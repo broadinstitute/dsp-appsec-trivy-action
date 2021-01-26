@@ -37,7 +37,7 @@ jobs:
           image: gcr.io/distroless/static
           sarif: trivy-results.sarif
 
-      - name: [test] Upload scan results to GitHub Security tab
+      - name: '[test] Upload scan results to GitHub Security tab'
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: trivy-results.sarif
