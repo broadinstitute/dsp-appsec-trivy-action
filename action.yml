@@ -59,7 +59,7 @@ runs:
           # add options for Sarif template output
           format_args="--format template --template '@contrib/sarif.tpl' --output '/workspace/${{ inputs.sarif }}'"
           echo "${format_args}"
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" --entrypoint sh aquasec/trivy -c 'touch /workspace/${{ inputs.sarif }}'
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" --entrypoint sh aquasec/trivy -c 'touch /workspace/${{ inputs.sarif }} && ls -al workspace'
         fi
 
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
