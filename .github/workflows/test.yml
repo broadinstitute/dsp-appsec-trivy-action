@@ -26,11 +26,13 @@ jobs:
           context: ./test
           dockerfile: Dockerfile.notrivy
 
-      - name: '[test] Scan a pre-built image'
+      - name: '[test] Include all severities'
         uses: ./
         with:
-          image: gcr.io/distroless/static
-
+          severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+      
+      https://github.com/broadinstitute/dsp-appsec-trivy-action/blob/3bb6a17ab85a1e0218db2a429d3b3a08b23b544c/.github/workflows/trivy.yml#L21-L24
+      
       - name: '[test] Generate Sarif output'
         uses: ./
         with:
