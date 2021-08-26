@@ -17,6 +17,11 @@ jobs:
         with:
           context: .              # (optional) set the path to Docker build context
           dockerfile: Dockerfile  # (optional) set the path to Dockerfile within build context
+      
+      # alternatively, with all vulnerability severity levels
+      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+        with:
+          severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
 
       # alternatively, if you're using a pre-built Docker image (e.g. with Jib or Buildpacks)
       - uses: broadinstitute/dsp-appsec-trivy-action@v1
