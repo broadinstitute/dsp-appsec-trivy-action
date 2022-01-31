@@ -60,6 +60,6 @@ runs:
           opt_args="--format template --template @contrib/sarif.tpl --output /workspace/${{ inputs.sarif }}"
         fi
 
-        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy \
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy image \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
           --ignore-unfixed --no-progress --timeout 10m ${opt_args} "${IMAGE}"
