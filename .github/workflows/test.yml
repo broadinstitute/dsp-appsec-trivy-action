@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - v1
+  schedule:
+    - cron: '0 8 * * 5'
 
 jobs:
   test:
@@ -30,7 +32,7 @@ jobs:
         uses: ./
         with:
           severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
-      
+
       - name: '[test] Generate Sarif output'
         uses: ./
         with:
