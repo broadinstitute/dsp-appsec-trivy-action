@@ -65,6 +65,6 @@ runs:
         fi
 
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy image \
-          --security-checks "{{input.security-checks}}" \
+          --security-checks "{{inputs.security-checks}}" \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
           --ignore-unfixed --no-progress --timeout 10m ${opt_args} "${IMAGE}"
