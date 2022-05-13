@@ -26,10 +26,6 @@ inputs:
     description: 'Sarif template output path relative to repository root, if any (example: trivy-results.sarif)'
     required: false
     default: ''
-  security-checks:
-    description: 'Does not scan image for secrets, but only vulnerabilities'
-    required: false
-    default: vuln 
 
 runs:
   using: composite
@@ -65,6 +61,5 @@ runs:
         fi
 
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" aquasec/trivy image \
-          --security-checks "{{ inputs.security-checks }}" \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
           --ignore-unfixed --no-progress --timeout 10m ${opt_args} "${IMAGE}"
