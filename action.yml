@@ -76,14 +76,11 @@ runs:
           if [ -n "${layers}" ] ; then
             echo "Comparing with layers of tagged blessed images ... "
             for lang in jre nodejs python nginx ruby ; do
-              crane ls "${BASE_PREFIX}/${lang}" | while read tag ; do
+              for tag in $(crane ls "${BASE_PREFIX}/${lang}"); do
 
                 blessed_image="${BASE_PREFIX}/${lang}:${tag}"
-                echo blessed_image: "${blessed_image}"
                 blessed_layers="$(remote_layers "${blessed_image}")"
-                echo blessed_layers: "${blessed_layers}"
                 n_layers="$(echo "${blessed_layers}" | wc -l)"
-                echo n_layers "${n_layers}"
                 trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
 
                 if [ "${trunc_layers}" = "${blessed_layers}" ] ; then
