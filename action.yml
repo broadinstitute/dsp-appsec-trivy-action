@@ -51,9 +51,9 @@ runs:
             curl -sLo jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
             chmod +x jq
           fi
-          if ! command -v gcrane ; then
-            echo "Downloading gcrane ... "
-            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xvzf -
+          if ! command -v crane ; then
+            echo "Downloading crane ... "
+            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xzf -
           fi
           popd
 
@@ -62,7 +62,7 @@ runs:
             rm -rf ${TMPBIN}
           }
           remote_layers() {
-            gcrane config "$1" | jq -r '.rootfs.diff_ids[]'
+            crane config "$1" | jq -r '.rootfs.diff_ids[]'
           }
 
           echo "Listing image layers ... "
@@ -75,17 +75,20 @@ runs:
 
           if [ -n "${layers}" ] ; then
             echo "Comparing with layers of tagged blessed images ... "
-            gcrane ls "${BASE_PREFIX}" -r | grep -v '@sha256' | while read blessed_image ; do
+            for lang in jre nodejs python nginx ruby ; do
+              crane ls "${BASE_PREFIX}/${lang}" | while read tag ; do
 
-              blessed_layers="$(remote_layers "${blessed_image}")"
-              echo "${blessed_layers}" | wc -l | read -r n_layers
-              trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
+                blessed_image="${BASE_PREFIX}/${lang}:${tag}"
+                blessed_layers="$(remote_layers "${blessed_image}")"
+                echo "${blessed_layers}" | wc -l | read -r n_layers
+                trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
 
-              if [ "${trunc_layers}" = "${blessed_layers}" ] ; then
-                echo "DSP AppSec blessed image ${blessed_image} is used, skipping scan"
-                cleanup
-                exit 0
-              fi
+                if [ "${trunc_layers}" = "${blessed_layers}" ] ; then
+                  echo "DSP AppSec blessed image ${blessed_image} is used, skipping scan"
+                  cleanup
+                  exit 0
+                fi
+              done
             done
           fi
           cleanup
