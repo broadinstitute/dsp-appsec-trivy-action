@@ -2,4 +2,4 @@ FROM scratch
 
 FROM us.gcr.io/broad-dsp-gcr-public/base/jre:17-alpine
 
-RUN exit 1
+RUN echo Test
