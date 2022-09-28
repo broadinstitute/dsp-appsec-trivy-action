@@ -83,6 +83,7 @@ runs:
                 blessed_layers="$(remote_layers "${blessed_image}")"
                 echo blessed_layers: "${blessed_layers}"
                 echo "${blessed_layers}" | wc -l | read -r n_layers
+                echo "echo "${blessed_layers}" | wc -l: $(echo "${blessed_layers}" | wc -l)"
                 echo n_layers "${n_layers}"
                 trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
 
