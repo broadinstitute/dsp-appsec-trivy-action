@@ -82,7 +82,7 @@ runs:
                 echo blessed_image: "${blessed_image}"
                 blessed_layers="$(remote_layers "${blessed_image}")"
                 echo blessed_layers: "${blessed_layers}"
-                n_layers="$(echo "${blessed_layers}" | wc -l)""
+                n_layers="$(echo "${blessed_layers}" | wc -l)"
                 echo n_layers "${n_layers}"
                 trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
 
