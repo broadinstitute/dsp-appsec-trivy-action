@@ -53,7 +53,7 @@ runs:
           fi
           if ! command -v gcrane ; then
             echo "Downloading gcrane ... "
-            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_arm64.tar.gz | tar xvzf -
+            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xvzf -
           fi
           popd
 
