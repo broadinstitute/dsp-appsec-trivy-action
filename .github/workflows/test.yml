@@ -22,7 +22,7 @@ jobs:
           context: ./test
           dockerfile: Dockerfile.trivy
 
-      - name: '[test] Skip on a blessed base image in Dockerfile'
+      - name: '[test] Skip on a blessed-based Dockerfile'
         uses: ./
         with:
           context: ./test
