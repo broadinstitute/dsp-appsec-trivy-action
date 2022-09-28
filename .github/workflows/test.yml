@@ -1,4 +1,4 @@
-name: dsp-appsec-trivy-action-test
+name: Action tests
 on:
   push:
     branches:
