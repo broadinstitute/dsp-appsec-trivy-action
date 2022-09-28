@@ -45,8 +45,8 @@ runs:
           echo "Checking if pre-built image is using a DSP AppSec blessed image ... "
 
           TMPBIN="$(mktemp -d)"
-          pushd "${TMPBIN}"
-          if ! command -v jq ; then
+          pushd "${TMPBIN}" >/dev/null
+          if ! command -v jq >/dev/null ; then
             echo "Downloading jq ... "
             curl -sLo jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
             chmod +x jq
@@ -55,7 +55,7 @@ runs:
             echo "Downloading crane ... "
             curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xzf -
           fi
-          popd
+          popd >/dev/null
 
           PATH="${PATH}:${TMPBIN}"
           cleanup() {
