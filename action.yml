@@ -34,8 +34,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/setup-go@v3
-
     - shell: bash
       working-directory: ${{ inputs.context }}
       env:
@@ -46,22 +44,25 @@ runs:
         if [ -n "${IMAGE}" ] ; then
           echo "Checking if pre-built image is using a DSP AppSec blessed image ... "
 
-          PATH="${PATH}:${PWD}"
+          TMPBIN="$(mktemp -d)"
+          pushd "${TMPBIN}"
           if ! command -v jq ; then
             echo "Downloading jq ... "
             curl -sLo jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
             chmod +x jq
           fi
-          if ! command -v grane ; then
-            echo "Installing gcrane ... "
-            go install github.com/google/go-containerregistry/cmd/gcrane@latest
+          if ! command -v gcrane ; then
+            echo "Downloading gcrane ... "
+            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_arm64.tar.gz | tar xvzf -
           fi
+          popd
 
+          PATH="${PATH}:${TMPBIN}"
+          cleanup() {
+            rm -rf ${TMPBIN}
+          }
           remote_layers() {
             gcrane config "$1" | jq -r '.rootfs.diff_ids[]'
-          }
-          cleanup() {
-            rm -f jq
           }
 
           echo "Listing image layers ... "
