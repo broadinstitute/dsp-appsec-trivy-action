@@ -79,8 +79,11 @@ runs:
               crane ls "${BASE_PREFIX}/${lang}" | while read tag ; do
 
                 blessed_image="${BASE_PREFIX}/${lang}:${tag}"
+                echo blessed_image: "${blessed_image}"
                 blessed_layers="$(remote_layers "${blessed_image}")"
+                echo blessed_layers: "${blessed_layers}"
                 echo "${blessed_layers}" | wc -l | read -r n_layers
+                echo n_layers "${n_layers}"
                 trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
 
                 if [ "${trunc_layers}" = "${blessed_layers}" ] ; then
