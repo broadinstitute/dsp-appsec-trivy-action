@@ -40,7 +40,7 @@ jobs:
       - name: '[test] Skip on a blessed-based remote image'
         uses: ./
         with:
-          image: us.gcr.io/broad-dsp-gcr-public/base/jre:17-alpine
+          image: us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10
 
       - name: '[test] Include all severities'
         uses: ./
@@ -58,15 +58,15 @@ jobs:
         with:
           sarif_file: trivy-results.sarif
 
-  prebuilt-scan:
-    name: DSP AppSec Trivy check
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        image:
-        - us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10
-    steps:
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
-        with:
-          image: ${{ matrix.image }}
+  # prebuilt-scan:
+  #   name: DSP AppSec Trivy check
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       image:
+  #       - us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10
+  #   steps:
+  #     - uses: broadinstitute/dsp-appsec-trivy-action@v1
+  #       with:
+  #         image: ${{ matrix.image }}
