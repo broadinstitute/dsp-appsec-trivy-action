@@ -67,6 +67,7 @@ runs:
 
           echo "Listing image layers ... "
           layers=$(docker image inspect "${IMAGE}" | jq -r '.[].RootFS.Layers[]')
+          echo "Checked image layers"
 
           if [ -z "${layers}" ] ; then
             echo "Image is not local, fetching layers from the registry ... "
