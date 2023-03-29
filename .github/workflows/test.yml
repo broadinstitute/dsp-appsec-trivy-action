@@ -1,4 +1,4 @@
-name: dsp-appsec-trivy-action-test
+name: Action tests
 on:
   push:
     branches:
@@ -22,11 +22,25 @@ jobs:
           context: ./test
           dockerfile: Dockerfile.trivy
 
-      - name: '[test] Skip a blessed base image'
+      - name: '[test] Skip on a blessed-based Dockerfile'
         uses: ./
         with:
           context: ./test
           dockerfile: Dockerfile.notrivy
+
+      - name: '[test] Build a blessed-based image'
+        working-directory: test
+        run: docker build -t blessed -f Dockerfile.blessed .
+
+      - name: '[test] Skip on a blessed-based local image'
+        uses: ./
+        with:
+          image: blessed
+
+      - name: '[test] Skip on a blessed-based remote image'
+        uses: ./
+        with:
+          image: us.gcr.io/broad-dsp-gcr-public/base/jre:17-distroless
 
       - name: '[test] Include all severities'
         uses: ./

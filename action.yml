@@ -37,14 +37,64 @@ runs:
     - shell: bash
       working-directory: ${{ inputs.context }}
       env:
-        BASE_PREFIX: us.gcr.io/broad-dsp-gcr-public/base/
+        BASE_PREFIX: us.gcr.io/broad-dsp-gcr-public/base
+        IMAGE: ${{ inputs.image }}
       run: |
         # Check if using a pre-built image
-        if [ -n "${{ inputs.image }}" ] ; then
-          IMAGE="${{ inputs.image }}"
+        if [ -n "${IMAGE}" ] ; then
+          echo "Checking if pre-built image is using a DSP AppSec blessed image ... "
+
+          TMPBIN="$(mktemp -d)"
+          pushd "${TMPBIN}" >/dev/null
+          if ! command -v jq >/dev/null ; then
+            echo "Downloading jq ... "
+            curl -sLo jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+            chmod +x jq
+          fi
+          if ! command -v crane ; then
+            echo "Downloading crane ... "
+            curl -sLo- https://github.com/google/go-containerregistry/releases/latest/download/go-containerregistry_Linux_x86_64.tar.gz | tar xzf -
+          fi
+          popd >/dev/null
+
+          PATH="${PATH}:${TMPBIN}"
+          cleanup() {
+            rm -rf ${TMPBIN}
+          }
+          remote_layers() {
+            crane config "$1" | jq -r '.rootfs.diff_ids[]'
+          }
+
+          echo "Listing image layers ... "
+          layers=$(docker image inspect "${IMAGE}" | jq -r '.[].RootFS.Layers[]') || true
+
+          if [ -z "${layers}" ] ; then
+            echo "Image is not local, fetching layers from the registry ... "
+            layers="$(remote_layers "${IMAGE}")"
+          fi
+
+          if [ -n "${layers}" ] ; then
+            echo "Comparing with layers of tagged blessed images ... "
+            for lang in jre nodejs python nginx ruby ; do
+              for tag in $(crane ls "${BASE_PREFIX}/${lang}"); do
+
+                blessed_image="${BASE_PREFIX}/${lang}:${tag}"
+                blessed_layers="$(remote_layers "${blessed_image}")"
+                n_layers="$(echo "${blessed_layers}" | wc -l)"
+                trunc_layers="$(echo "${layers}" | head -n "${n_layers}")"
+
+                if [ "${trunc_layers}" = "${blessed_layers}" ] ; then
+                  echo "DSP AppSec blessed image ${blessed_image} is used, skipping scan"
+                  cleanup
+                  exit 0
+                fi
+              done
+            done
+          fi
+          cleanup
         else
           # Exit early if a "blessed" base image is used in the last stage of the Dockerfile
-          if grep "^FROM " "${{ inputs.dockerfile }}" | tail -1 | grep -q "^FROM ${BASE_PREFIX}" ; then
+          if grep "^FROM " "${{ inputs.dockerfile }}" | tail -1 | grep -q "^FROM ${BASE_PREFIX}/" ; then
             echo "This Dockerfile is using a DSP AppSec team's blessed image at runtime, no need to scan"
             exit 0
           fi
