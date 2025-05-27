@@ -1,4 +1,7 @@
 name: dsp-appsec-trivy
+permissions:
+  contents: read
+  security-events: write
 on: [pull_request]
 
 jobs:
