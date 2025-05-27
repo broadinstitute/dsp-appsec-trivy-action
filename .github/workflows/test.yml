@@ -1,0 +1,59 @@
+name: Action tests
+on:
+  push:
+    branches:
+      - v1
+  pull_request:
+    branches:
+      - v1
+  schedule:
+    - cron: '0 8 * * 5'
+
+jobs:
+  test:
+    name: Test Trivy action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: '[test] Build & scan'
+        uses: ./
+        with:
+          context: ./test
+          dockerfile: Dockerfile.trivy
+
+      - name: '[test] Skip on a blessed-based Dockerfile'
+        uses: ./
+        with:
+          context: ./test
+          dockerfile: Dockerfile.notrivy
+
+      - name: '[test] Build a blessed-based image'
+        working-directory: test
+        run: docker build -t blessed -f Dockerfile.blessed .
+
+      - name: '[test] Skip on a blessed-based local image'
+        uses: ./
+        with:
+          image: blessed
+
+      - name: '[test] Skip on a blessed-based remote image'
+        uses: ./
+        with:
+          image: us.gcr.io/broad-dsp-gcr-public/base/jre:17-distroless
+
+      - name: '[test] Include all severities'
+        uses: ./
+        with:
+          severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+
+      - name: '[test] Generate Sarif output'
+        uses: ./
+        with:
+          image: gcr.io/distroless/static
+          sarif: trivy-results.sarif
+
+      - name: '[test] Upload scan results to GitHub Security tab'
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: trivy-results.sarif
