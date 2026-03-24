@@ -116,7 +116,7 @@ runs:
 
         # NOTE: Trivy image is pinned by immutable digest; update tag and digest together when upgrading.
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" \
-          aquasec/trivy:0.69.3@sha256:7228e304ae0f610a1fad937baa463598cadac0c2ac4027cc68f3a8b997115689 \
+          aquasec/trivy:0.69.3@sha256:bcc376de8d77cfe086a917230e818dc9f8528e3c852f7b1aff648949b6258d1c \
           image \
           --scanners "${{ inputs.scanners }}" \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
