@@ -1,5 +1,7 @@
 [![Action Tests](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml)
 
+[![dsp-appsec-trivy](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml)
+
 # DSP Appsec Trivy action
 
 Github workflow action which checks if a Dockerfile is using AppSec
