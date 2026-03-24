@@ -114,8 +114,9 @@ runs:
           opt_args="--format template --template @contrib/sarif.tpl --output /workspace/${{ inputs.sarif }}"
         fi
 
+        # NOTE: Trivy image is pinned by immutable digest; update tag and digest together when upgrading.
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro -v "${{ github.workspace }}:/workspace" \
-          aquasec/trivy@sha256:7228e304ae0f610a1fad937baa463598cadac0c2ac4027cc68f3a8b997115689 \
+          aquasec/trivy:0.69.3@sha256:7228e304ae0f610a1fad937baa463598cadac0c2ac4027cc68f3a8b997115689 \
           image \
           --scanners "${{ inputs.scanners }}" \
           --vuln-type "${{ inputs.type }}" --severity "${{ inputs.severities }}" \
