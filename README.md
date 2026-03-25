@@ -1,6 +1,4 @@
-[![Action Tests](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml)
-
-[![dsp-appsec-trivy](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml)
+[![Action Tests](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/test.yml) [![dsp-appsec-trivy](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/trivy.yml) [![CodeQL](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/broadinstitute/dsp-appsec-trivy-action/actions/workflows/github-code-scanning/codeql)
 
 # DSP Appsec Trivy action
 
