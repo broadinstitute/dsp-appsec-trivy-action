@@ -7,7 +7,7 @@ jobs:
     name: DSP AppSec Trivy check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # simple case
       - uses: broadinstitute/dsp-appsec-trivy-action@v1
