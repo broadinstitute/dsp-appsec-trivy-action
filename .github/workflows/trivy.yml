@@ -10,7 +10,7 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       # simple case
       - uses: broadinstitute/dsp-appsec-trivy-action@v1
@@ -36,6 +36,7 @@ jobs:
         with:
           image: gcr.io/distroless/static
           sarif: trivy-results.sarif
+
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
