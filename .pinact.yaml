@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/pinact/refs/heads/main/json-schema/pinact.json
 # pinact - https://github.com/suzuki-shunsuke/pinact
 version: 3
+
 # Default min-age in days (optional)
 # pinact >= v4.0.0
 min_age:
@@ -9,3 +10,9 @@ min_age:
 
 # Separator between version and tag comment (optional, default is " # ")
 separator: " # "
+
+rules:
+  - ignore: true
+    conditions:
+      - expr: |
+          ActionRepoFullName == "broadinstitute/dsp-appsec-trivy-action"
