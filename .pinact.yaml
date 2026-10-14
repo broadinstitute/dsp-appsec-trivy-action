@@ -12,7 +12,7 @@ min_age:
 separator: " # "
 
 rules:
-  - ignore: true
+  - min_age: 0
     conditions:
       - expr: |
           ActionRepoFullName == "broadinstitute/dsp-appsec-trivy-action"

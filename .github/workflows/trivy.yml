@@ -16,26 +16,26 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       # simple case
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
 
       # alternatively, if you need to customize the path to Dockerfile and/or build context
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           context: .              # (optional) set the path to Docker build context
           dockerfile: Dockerfile  # (optional) set the path to Dockerfile within build context
       
       # alternatively, with all vulnerability severity levels
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
 
       # alternatively, if you're using a pre-built Docker image (e.g. with Jib or Buildpacks)
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           image: gcr.io/distroless/static
 
       # alernatively, if you'd like to upload results to GitHub Security tab
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           image: gcr.io/distroless/static
           sarif: trivy-results.sarif
