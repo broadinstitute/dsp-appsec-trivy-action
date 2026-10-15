@@ -12,9 +12,12 @@ on:
 jobs:
   test:
     name: Test Trivy action
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: '[test] Build & scan'
         uses: ./
@@ -54,6 +57,6 @@ jobs:
           sarif: trivy-results.sarif
 
       - name: '[test] Upload scan results to GitHub Security tab'
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: trivy-results.sarif

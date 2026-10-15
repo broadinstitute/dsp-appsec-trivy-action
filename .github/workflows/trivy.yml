@@ -5,35 +5,39 @@ jobs:
   appsec-trivy:
     # Parse Dockerfile and build, scan image if a "blessed" base image is not used
     name: DSP AppSec Trivy check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: read
+      security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # simple case
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
 
       # alternatively, if you need to customize the path to Dockerfile and/or build context
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           context: .              # (optional) set the path to Docker build context
           dockerfile: Dockerfile  # (optional) set the path to Dockerfile within build context
       
       # alternatively, with all vulnerability severity levels
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           severities: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
 
       # alternatively, if you're using a pre-built Docker image (e.g. with Jib or Buildpacks)
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           image: gcr.io/distroless/static
 
       # alernatively, if you'd like to upload results to GitHub Security tab
-      - uses: broadinstitute/dsp-appsec-trivy-action@v1
+      - uses: broadinstitute/dsp-appsec-trivy-action@a92497ab92470488394070f91e9bfa8af5189781 # v1
         with:
           image: gcr.io/distroless/static
           sarif: trivy-results.sarif
+
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
         with:
           sarif_file: trivy-results.sarif
