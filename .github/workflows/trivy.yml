@@ -5,7 +5,7 @@ jobs:
   appsec-trivy:
     # Parse Dockerfile and build, scan image if a "blessed" base image is not used
     name: DSP AppSec Trivy check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       security-events: write
